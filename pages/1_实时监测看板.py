@@ -60,7 +60,7 @@ labels = ["%s（%s）" % (n["name"], n["id"]) for n in nodes]
 sel = st.selectbox("选择节点", labels)
 node = nodes[labels.index(sel)]
 view = (
-    '<div style="position:relative;width:100%;max-width:640px;height:340px;border-radius:12px;'
+    '<div style="position:relative;width:100%%;max-width:640px;height:340px;border-radius:12px;'
     'overflow:hidden;border:1px solid #E5E2DA;background:#2C2C2A">'
     '<div style="position:absolute;left:0;top:0;right:0;padding:8px 12px;color:#fff;font-size:12px;'
     'background:rgba(0,0,0,.35)">%s · 模拟画面（人脸已本地脱敏）</div>'
