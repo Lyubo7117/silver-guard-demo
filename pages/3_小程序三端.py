@@ -2,17 +2,20 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import streamlit as st
-from streamlit.components.v1 import html as st_html
 import style
 
 st.markdown(style.css(), unsafe_allow_html=True)
-st.title("「银发守护」小程序 · 三端原型")
-st.caption("老人端 / 家属端 / 管理者端界面原型（静态高保真示意，数据为模拟）")
+st.markdown(style.page_header(
+    "「银发守护」小程序 · 三端原型",
+    "老人端 / 家属端 / 管理者端界面原型（静态高保真示意，数据为模拟）",
+    "03 · 用户交互层"), unsafe_allow_html=True)
 
 
 def phone(inner):
-    return ('<div class="phone"><div class="notch"></div>'
-            '<div class="screen">%s</div></div>' % inner)
+    return ('<div class="phone">'
+            '<div class="status"><span class="sig">●●● ○ 5G</span><span>9:41</span></div>'
+            f'<div class="screen">{inner}</div>'
+            '<div class="homei"></div></div>')
 
 
 t1, t2, t3 = st.tabs(["老人端", "家属端", "管理者端"])
@@ -32,7 +35,7 @@ with t1:
         '<div class="sg-card" style="margin-top:8px"><div class="sg-h">今日提醒</div>'
         '<div class="sg-p">下午4点社区义诊，步行约300米</div></div>'
     )
-    st_html(elder, height=560)
+    st.iframe(elder, height=560)
 
 with t2:
     family = phone(
@@ -48,7 +51,7 @@ with t2:
         '<div class="sg-card"><div class="sg-h">健康周报</div>'
         '<div class="sg-p">本周活动规律，建议增加午间休息</div></div>'
     )
-    st_html(family, height=560)
+    st.iframe(family, height=560)
 
 with t3:
     admin = phone(
@@ -64,4 +67,17 @@ with t3:
         '<div class="rowline"><span>边缘算力负载</span><b>正常</b></div></div>'
         '<div class="bigbtn">进入数据看板</div>'
     )
-    st_html(admin, height=560)
+    st.iframe(admin, height=560)
+
+st.markdown(style.section("三端协同逻辑", "同一事件在三端的流转"), unsafe_allow_html=True)
+st.markdown(
+    '<div class="sg-flow">'
+    '<div class="step"><div class="n">老</div><div class="t">老人端</div>'
+    '<div class="d">大字体、大按钮、语音优先；异常时自动弹窗确认并提供一键 SOS 兜底。</div></div>'
+    '<div class="step"><div class="n">属</div><div class="t">家属端</div>'
+    '<div class="d">实时查看老人状态与定位，接收告警推送与处置进展，按周收到健康周报。</div></div>'
+    '<div class="step"><div class="n">管</div><div class="t">管理者端</div>'
+    '<div class="d">全网事件处置队列、设备运维监控、适老化指数看板与调度派单。</div></div>'
+    '</div>',
+    unsafe_allow_html=True)
+st.markdown(style.footer(), unsafe_allow_html=True)

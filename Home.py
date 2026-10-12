@@ -2,7 +2,6 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import streamlit as st
-from streamlit.components.v1 import html as st_html
 import style
 import sim_data
 
@@ -57,68 +56,108 @@ ARCH_SVG = """
 
 st.markdown(style.css(), unsafe_allow_html=True)
 
+# ---------------- Hero 首屏 ----------------
 st.markdown(
-    '<div class="sg-card" style="border-left:4px solid #0F6E56">'
-    '<div class="sg-h" style="font-size:19px">银发守护 · 城市公共空间适老化智能感知与服务系统</div>'
-    '<div class="sg-p" style="margin-top:4px">基于多模态大模型的「感知—理解—服务」一体化解决方案</div>'
-    '<div style="margin-top:8px">'
-    '<span class="badge b-info">概念演示原型</span>'
-    '<span class="badge b-gray">智慧生活与大健康赛道</span>'
+    '<div class="sg-hero">'
+    '<div class="eyebrow">SMART CITY · 智慧生活与大健康赛道</div>'
+    '<div class="t">银发守护 · 城市公共空间适老化智能感知与服务系统</div>'
+    '<div class="s">基于多模态大模型的「感知 — 理解 — 服务」一体化解决方案：'
+    '在公园、广场、步行街等公共空间部署多模态感知终端，边缘端本地完成跌倒 / 徘徊 / 聚集等异常行为识别，'
+    '云端结合适老化知识图谱生成个性化服务建议，经「银发守护」小程序触达家属并联动社区处置。</div>'
+    '<div class="tags">'
+    '<span class="badge b-primary">概念演示原型</span>'
+    '<span class="badge b-info">多模态大模型</span>'
+    '<span class="badge b-info">端边云协同</span>'
     '<span class="badge b-gray">团队：晚晴智守</span>'
-    '</div></div>',
-    unsafe_allow_html=True,
-)
-
-st.markdown(
-    '<div class="sg-note">本页及后续页面所有节点状态、事件与图表均为 <b>模拟数据</b>，'
-    '用于展示系统形态与闭环逻辑，不代表真实运行结果；技术指标为设计目标值，实测进展见「5 技术验证路线」。</div>',
-    unsafe_allow_html=True,
-)
-
-c1, c2, c3 = st.columns(3)
-with c1:
-    st.markdown(style.kpi("2.97 亿", "60岁及以上老年人口（占总人口21.1%）"), unsafe_allow_html=True)
-with c2:
-    st.markdown(style.kpi("≈4000 万/年", "老年人发生跌倒，约50%在公共场所"), unsafe_allow_html=True)
-with c3:
-    st.markdown(style.kpi("1.2 万亿元", "2026年中国智慧养老市场规模（预测）"), unsafe_allow_html=True)
-
-st.markdown("#### 系统闭环：感知 → 理解 → 服务")
-st.markdown(
-    '<div class="sg-flow">'
-    '<div class="step"><div class="t">① 感知</div><div class="d">多模态终端实时采集视觉、语音与环境状态，边缘端本地完成跌倒/徘徊/聚集识别。</div></div>'
-    '<div class="step"><div class="t">② 理解</div><div class="d">异常事件转为结构化特征，云端 LLM 结合适老化知识图谱进行语义理解与推理。</div></div>'
-    '<div class="step"><div class="t">③ 服务</div><div class="d">生成个性化服务建议，经小程序触达家属并联动社区处置，形成主动服务闭环。</div></div>'
+    '</div>'
+    '<div class="meta"><span>第十二届中国研究生智慧城市技术与创意设计大赛</span>'
+    '<span>队长：刘宇博</span><span>队员：尚金凌 · 张烨</span></div>'
     '</div>',
     unsafe_allow_html=True,
 )
 
-st.markdown("#### 四层架构")
-st_html(ARCH_SVG, height=470)
+st.markdown(style.note(
+    '本原型所有节点状态、事件与图表均为 <b>模拟数据</b>，用于展示系统形态与闭环逻辑，'
+    '不代表真实运行结果；技术指标为设计目标值，预估依据见「6 指标预估依据」。'),
+    unsafe_allow_html=True)
 
-st.markdown("#### 核心指标（设计目标值）")
-m1, m2, m3, m4 = st.columns(4)
-with m1:
-    st.markdown(style.kpi("mAP ≥ 90%", "异常行为检测精度（目标）"), unsafe_allow_html=True)
-with m2:
-    st.markdown(style.kpi("< 200 ms", "边缘推理响应延迟（目标）"), unsafe_allow_html=True)
-with m3:
-    st.markdown(style.kpi("12 类", "支持的异常行为识别"), unsafe_allow_html=True)
-with m4:
-    st.markdown(style.kpi("≈2500 元", "单节点硬件成本"), unsafe_allow_html=True)
+# ---------------- 社会价值 ----------------
+st.markdown(style.section("为什么做这件事", "社会价值与市场空间"), unsafe_allow_html=True)
+c1, c2, c3 = st.columns(3)
+with c1:
+    st.markdown(style.kpi("2.97 亿", "60岁及以上老年人口", "占总人口 21.1%，已进入中度老龄化社会"), unsafe_allow_html=True)
+with c2:
+    st.markdown(style.kpi("≈4000 万/年", "老年人发生跌倒", "约 50% 发生在公共场所，救治不及时后果严重"), unsafe_allow_html=True)
+with c3:
+    st.markdown(style.kpi("1.2 万亿元", "2026年智慧养老市场规模", "预测值，公共空间适老化是增量蓝海"), unsafe_allow_html=True)
 
+# ---------------- 系统闭环 ----------------
+st.markdown(style.section("系统闭环", "感知 → 理解 → 服务"), unsafe_allow_html=True)
 st.markdown(
-    '<div class="sg-card"><div class="sg-h">商业模式：B2G2C</div>'
-    '<div class="sg-p">政府端 SaaS 年费 5000 元/节点（约60%收入）· 家属端增值服务 99 元/年（约25%）· '
-    '机构端设备+年费（约10%）· 数据增值报告（约5%，中长期）。</div></div>',
+    '<div class="sg-flow">'
+    '<div class="step"><div class="n">1</div><div class="t">感知</div>'
+    '<div class="d">多模态终端实时采集视觉、语音与环境状态，边缘端本地完成跌倒 / 徘徊 / 聚集识别，原始画面不出域。</div></div>'
+    '<div class="step"><div class="n">2</div><div class="t">理解</div>'
+    '<div class="d">异常事件转为结构化特征，云端 LLM 结合适老化知识图谱进行语义理解与风险推理。</div></div>'
+    '<div class="step"><div class="n">3</div><div class="t">服务</div>'
+    '<div class="d">生成个性化服务建议，经小程序触达家属并联动社区处置，形成主动服务闭环。</div></div>'
+    '</div>',
     unsafe_allow_html=True,
 )
 
-st.markdown("#### 页面导航")
+# ---------------- 四层架构 ----------------
+st.markdown(style.section("总体架构", "端 – 边 – 云 – 端 四层协同"), unsafe_allow_html=True)
+st.iframe(ARCH_SVG, height=470)
+
+# ---------------- 核心指标 ----------------
+st.markdown(style.section("核心指标", "设计目标值 · 预估依据见「6 指标预估依据」"), unsafe_allow_html=True)
+m1, m2, m3, m4 = st.columns(4)
+with m1:
+    st.markdown(style.kpi("mAP ≥ 90%", "异常行为检测精度", "目标值，非实测"), unsafe_allow_html=True)
+with m2:
+    st.markdown(style.kpi("< 200 ms", "边缘推理响应延迟", "目标值，非实测"), unsafe_allow_html=True)
+with m3:
+    st.markdown(style.kpi("12 类", "支持的异常行为识别", "封闭类别集 + 零样本兜底"), unsafe_allow_html=True)
+with m4:
+    st.markdown(style.kpi("≈ 2500 元", "单节点硬件成本", "Jetson Nano 级方案"), unsafe_allow_html=True)
+
+# ---------------- 商业模式 ----------------
+st.markdown(style.section("商业模式", "B2G2C · 收入结构预估"), unsafe_allow_html=True)
 st.markdown(
-    '- **实时监测看板**：多节点运行状态与模拟主监测视图\n'
-    '- **事件与处置**：异常事件时间线与云端服务建议\n'
-    '- **小程序三端**：老人端 / 家属端 / 管理者端界面原型\n'
-    '- **管理者看板**：适老化指数与统计分析\n'
-    '- **技术验证路线**：关键技术对照与无硬件替代方案',
+    '<div class="sg-card">'
+    '<div class="sg-p">以政府端 SaaS 订阅为基本盘，家属端增值服务提升粘性，机构端与数据增值服务拓展中长期空间。</div>'
+    '<div class="sg-barrow">'
+    '<div class="item"><div class="lab"><span>政府端 SaaS 年费（5000 元/节点）</span><b>约 60%</b></div>'
+    '<div class="sg-bar"><i style="width:60%"></i></div></div>'
+    '<div class="item"><div class="lab"><span>家属端增值服务（99 元/年）</span><b>约 25%</b></div>'
+    '<div class="sg-bar"><i style="width:25%"></i></div></div>'
+    '<div class="item"><div class="lab"><span>机构端设备 + 年费</span><b>约 10%</b></div>'
+    '<div class="sg-bar"><i style="width:10%"></i></div></div>'
+    '<div class="item"><div class="lab"><span>数据增值报告（中长期）</span><b>约 5%</b></div>'
+    '<div class="sg-bar"><i style="width:5%"></i></div></div>'
+    '</div></div>',
+    unsafe_allow_html=True,
 )
+
+# ---------------- 页面导航 ----------------
+st.markdown(style.section("演示导航", "左侧边栏可切换，建议按序演示"), unsafe_allow_html=True)
+nav = [
+    ("📹", "实时监测看板", "多节点运行状态 + 模拟主监测视图（检测框 / 扫描线 / SOS 告警）"),
+    ("🚨", "事件与处置", "异常事件列表、感知—理解—服务时间线、云端服务建议与处置流转"),
+    ("📱", "小程序三端", "老人端 / 家属端 / 管理者端高保真界面原型，可切换查看"),
+    ("📊", "管理者看板", "适老化指数、事件趋势、类型分布与响应时长统计"),
+    ("🧭", "技术验证路线", "关键技术设计目标 vs 当前状态、无硬件替代方案、12 个月路线"),
+    ("📐", "指标预估依据", "四项核心指标的预估推导链条与公开基准来源"),
+]
+rows = [nav[0:3], nav[3:6]]
+for row in rows:
+    cols = st.columns(3)
+    for col, (ico, t, d) in zip(cols, row):
+        with col:
+            st.markdown(
+                f'<div class="sg-navcard"><div class="ico">{ico}</div>'
+                f'<div class="t">{t}</div><div class="d">{d}</div></div>',
+                unsafe_allow_html=True,
+            )
+
+st.markdown(style.footer(), unsafe_allow_html=True)

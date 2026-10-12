@@ -6,17 +6,19 @@ import pandas as pd
 import style, sim_data
 
 st.markdown(style.css(), unsafe_allow_html=True)
-st.title("异常事件与处置")
-st.caption("异常事件列表 · 感知-理解-服务时间线 · 云端服务建议（数据为模拟）")
+st.markdown(style.page_header(
+    "异常事件与处置",
+    "异常事件列表 · 感知—理解—服务时间线 · 云端服务建议",
+    "02 · 事件闭环"), unsafe_allow_html=True)
 
 if "events" not in st.session_state:
     st.session_state.events = sim_data.gen_events()
 events = st.session_state.events
 
+st.markdown(style.section("事件列表", "全网异常事件实时汇总"), unsafe_allow_html=True)
 df = pd.DataFrame(events)[["event_id", "type", "node", "date", "time", "confidence", "status"]]
-st.subheader("事件列表")
 st.dataframe(
-    df, use_container_width=True, hide_index=True,
+    df, width="stretch", hide_index=True,
     column_config={"confidence": st.column_config.ProgressColumn("置信度", format="%.2f", min_value=0, max_value=1)},
 )
 
@@ -24,18 +26,18 @@ ids = [e["event_id"] for e in events]
 sel = st.selectbox("选择事件查看详情", ids)
 ev = next(e for e in events if e["event_id"] == sel)
 
+st.markdown(style.section("事件详情"), unsafe_allow_html=True)
 st.markdown(
-    '<div class="sg-card"><div class="sg-h" style="font-size:16px">事件详情 · %s %s</div>'
-    '<div style="margin-top:6px">'
-    '<span class="badge b-info">%s</span>'
-    '<span class="badge b-gray">%s</span>'
-    '<span class="badge b-gray">%s %s</span>'
-    '<span class="badge b-gray">置信度 %s</span>'
-    '</div></div>' % (ev["event_id"], style.status_badge(ev["status"]), ev["type"],
-                      ev["node"], ev["date"], ev["time"], ev["confidence"]),
+    f'<div class="sg-card"><div class="sg-h" style="font-size:16px">{ev["event_id"]} {style.status_badge(ev["status"])}</div>'
+    f'<div style="margin-top:8px">'
+    f'<span class="badge b-info">{ev["type"]}</span>'
+    f'<span class="badge b-gray">{ev["node"]}</span>'
+    f'<span class="badge b-gray">{ev["date"]} {ev["time"]}</span>'
+    f'<span class="badge b-warn">置信度 {ev["confidence"]}</span>'
+    f'</div></div>',
     unsafe_allow_html=True)
 
-st.subheader("处置时间线（感知—理解—服务）")
+st.markdown(style.section("处置时间线", "感知 — 理解 — 服务"), unsafe_allow_html=True)
 tl = [
     ("T0 边缘检出", "<200ms 本地推理识别异常，触发本地告警"),
     ("T1 本地脱敏", "人脸模糊化，仅上传行为特征向量"),
@@ -44,22 +46,26 @@ tl = [
     ("T4 触达联动", "通知家属 / 派单社区 / 联动处置"),
     ("T5 处置完结", "记录归档，纳入适老化指数统计"),
 ]
-for t, d in tl:
-    st.markdown('<div class="rowline"><span><b>%s</b></span><span class="sg-mini">%s</span></div>' % (t, d),
-                unsafe_allow_html=True)
+for i, (t, d) in enumerate(tl):
+    st.markdown(
+        f'<div class="sg-card" style="padding:10px 16px;margin-bottom:8px">'
+        f'<div class="rowline"><span><span class="badge b-primary">{i+1}</span> <b>{t}</b></span>'
+        f'<span class="sg-mini">{d}</span></div></div>',
+        unsafe_allow_html=True)
 
-st.subheader("云端服务建议（模拟 LLM 输出）")
+st.markdown(style.section("云端服务建议", "模拟 LLM 输出 · 结构化个性化建议"), unsafe_allow_html=True)
 sug = sim_data.suggestion_for(ev["type"])
 cols = st.columns(2)
 for i, (k, v) in enumerate(sug):
     with cols[i % 2]:
-        st.markdown('<div class="sg-card"><div class="sg-h">%s</div><div class="sg-p">%s</div></div>' % (k, v),
+        st.markdown(f'<div class="sg-card"><div class="sg-h">{k}</div><div class="sg-p">{v}</div></div>',
                     unsafe_allow_html=True)
 
-st.markdown('<div class="sg-note">该事件已本地人脸脱敏，云端仅保存行为特征向量；数据采用 AES-256 加密存储。</div>',
-            unsafe_allow_html=True)
+st.markdown(style.note(
+    '该事件已本地人脸脱敏，云端仅保存行为特征向量；数据采用 AES-256 加密存储，'
+    '体现「隐私优先」的架构设计原则。'), unsafe_allow_html=True)
 
-st.subheader("处置操作（模拟）")
+st.markdown(style.section("处置操作", "模拟管理者端处置动作"), unsafe_allow_html=True)
 b1, b2, b3 = st.columns(3)
 
 
@@ -71,11 +77,12 @@ def set_status(s):
 
 
 with b1:
-    if st.button("通知家属", use_container_width=True):
+    if st.button("通知家属", width="stretch"):
         st.toast("已通知家属（模拟）")
 with b2:
-    if st.button("派单社区", use_container_width=True):
+    if st.button("派单社区", width="stretch"):
         st.toast("已派单至社区（模拟）")
 with b3:
-    if st.button("标记已完结", use_container_width=True):
+    if st.button("标记已完结", width="stretch"):
         set_status("已完结")
+st.markdown(style.footer(), unsafe_allow_html=True)

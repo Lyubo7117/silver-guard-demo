@@ -2,23 +2,27 @@
 import sys, os, time
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import streamlit as st
-from streamlit.components.v1 import html as st_html
 import style, sim_data
 
 st.markdown(style.css(), unsafe_allow_html=True)
-st.title("实时监测看板")
-st.caption("多节点运行状态 · 模拟主监测视图 · SOS 本地快速告警（数据为模拟）")
+st.markdown(style.page_header(
+    "实时监测看板",
+    "多节点运行状态 · 模拟主监测视图 · SOS 本地快速告警",
+    "01 · 感知层实况"), unsafe_allow_html=True)
 
 if "seed" not in st.session_state:
     st.session_state.seed = 0
 
-ctrl1, ctrl2 = st.columns([1, 2])
+ctrl1, ctrl2, ctrl3 = st.columns([1, 1, 2])
 with ctrl1:
-    if st.button("立即刷新", use_container_width=True):
+    if st.button("立即刷新", width="stretch"):
         st.session_state.seed += 1
         st.rerun()
 with ctrl2:
     st.checkbox("模拟实时推送（每 3 秒）", key="live")
+with ctrl3:
+    st.markdown('<div class="sg-mini" style="padding-top:8px">刷新或开启推送后，各节点状态与画面将按新随机种子重新生成（均为模拟数据）。</div>',
+                unsafe_allow_html=True)
 if st.session_state.get("live"):
     time.sleep(3)
     st.session_state.seed += 1
@@ -30,48 +34,60 @@ alarm = sum(1 for n in nodes if n["status"] == "告警")
 people = sum(n["people"] for n in nodes)
 avg_lat = round(sum(n["latency_ms"] for n in nodes) / len(nodes))
 
+st.markdown(style.section("全网概览"), unsafe_allow_html=True)
 k1, k2, k3, k4 = st.columns(4)
-k1.markdown(style.kpi("%d/%d" % (online, len(nodes)), "在线节点"), unsafe_allow_html=True)
-k2.markdown(style.kpi(str(alarm), "告警节点"), unsafe_allow_html=True)
-k3.markdown(style.kpi(str(people), "当前监测人数"), unsafe_allow_html=True)
-k4.markdown(style.kpi("%d ms" % avg_lat, "平均推理延迟（模拟）"), unsafe_allow_html=True)
+with k1:
+    st.markdown(style.kpi(f"{online}/{len(nodes)}", "在线节点"), unsafe_allow_html=True)
+with k2:
+    st.markdown(style.kpi(str(alarm), "告警节点", "需关注节点数"), unsafe_allow_html=True)
+with k3:
+    st.markdown(style.kpi(str(people), "当前监测人数", "全网实时汇总"), unsafe_allow_html=True)
+with k4:
+    st.markdown(style.kpi(f"{avg_lat} ms", "平均推理延迟", "模拟值 · 目标 <200ms"), unsafe_allow_html=True)
 
 for n in [x for x in nodes if x["sos"]]:
-    st.error("SOS 本地快速告警：%s 检测到【挥手呼救】，边缘端 <200ms 本地触发，未经云端。" % n["name"])
+    st.markdown(style.note(
+        f'<b>SOS 本地快速告警</b>：{n["name"]} 检测到【挥手呼救】，'
+        f'边缘端 &lt;200ms 本地触发，未经云端，体现隐私优先与低延迟设计。'),
+        unsafe_allow_html=True)
 
-st.subheader("节点状态")
+st.markdown(style.section("节点状态", "边缘智能层各节点运行实况"), unsafe_allow_html=True)
 cols = st.columns(3)
 for i, n in enumerate(nodes):
     with cols[i % 3]:
         st.markdown(
-            '<div class="sg-card">'
-            '<div class="sg-h">%s %s</div>'
-            '<div class="sg-p">%s · %s场景</div>'
-            '<div class="rowline"><span>当前人数</span><b>%d</b></div>'
-            '<div class="rowline"><span>最近行为</span><b>%s</b></div>'
-            '<div class="rowline"><span>推理延迟</span><b>%d ms</b></div>'
-            '<div class="rowline"><span>隐私</span><b>已本地脱敏</b></div>'
-            '</div>' % (n["name"], style.status_badge(n["status"]), n["id"], n["type"],
-                        n["people"], n["behavior"], n["latency_ms"]),
+            f'<div class="sg-card">'
+            f'<div class="sg-h">{n["name"]} {style.status_badge(n["status"])}</div>'
+            f'<div class="sg-p">{n["id"]} · {n["type"]}场景</div>'
+            f'<div class="rowline"><span>当前人数</span><b>{n["people"]}</b></div>'
+            f'<div class="rowline"><span>最近行为</span><b>{n["behavior"]}</b></div>'
+            f'<div class="rowline"><span>推理延迟</span><b>{n["latency_ms"]} ms</b></div>'
+            f'<div class="rowline"><span>隐私保护</span><b>已本地脱敏</b></div>'
+            f'</div>',
             unsafe_allow_html=True)
 
-st.subheader("主监测视图（模拟）")
-labels = ["%s（%s）" % (n["name"], n["id"]) for n in nodes]
+st.markdown(style.section("主监测视图", "检测框 + 骨架示意 + 扫描线（模拟画面，人脸已本地脱敏）"), unsafe_allow_html=True)
+labels = [f'{n["name"]}（{n["id"]}）' for n in nodes]
 sel = st.selectbox("选择节点", labels)
 node = nodes[labels.index(sel)]
+n_obj = max(2, node["people"] % 5)
 view = (
-    '<div style="position:relative;width:100%%;max-width:640px;height:340px;border-radius:12px;'
-    'overflow:hidden;border:1px solid #E5E2DA;background:#2C2C2A">'
-    '<div style="position:absolute;left:0;top:0;right:0;padding:8px 12px;color:#fff;font-size:12px;'
-    'background:rgba(0,0,0,.35)">%s · 模拟画面（人脸已本地脱敏）</div>'
-    '<div style="position:absolute;left:12%%;top:38%%;width:120px;height:150px;border:2px solid #97C459;'
-    'border-radius:6px"><span style="position:absolute;top:-18px;left:0;color:#97C459;font-size:11px">person 0.94</span></div>'
-    '<div style="position:absolute;left:52%%;top:52%%;width:110px;height:120px;border:2px solid #EF9F27;'
-    'border-radius:6px"><span style="position:absolute;top:-18px;left:0;color:#EF9F27;font-size:11px">%s 0.88</span></div>'
-    '<div style="position:absolute;left:78%%;top:60%%;width:70px;height:90px;border:2px solid #85B7EB;'
-    'border-radius:6px"><span style="position:absolute;top:-18px;left:0;color:#85B7EB;font-size:11px">person 0.91</span></div>'
-    '<div style="position:absolute;left:0;bottom:0;right:0;padding:8px 12px;color:#fff;font-size:12px;'
-    'background:rgba(0,0,0,.35)">检测目标 %d · 主导行为 %s · 延迟 %d ms</div>'
-    '</div>' % (node["name"], node["behavior"], max(2, node["people"] % 5), node["behavior"], node["latency_ms"])
+    '<div class="sg-mon">'
+    '<div class="hud hud-top"><span class="rec">● REC</span>'
+    f'<span>{node["name"]} · 模拟画面（人脸已本地脱敏）</span></div>'
+    '<div class="scan"></div>'
+    '<div class="box" style="--c:#97C459;left:12%;top:34%;width:19%;height:46%">'
+    '<span class="tag">person 0.94</span></div>'
+    f'<div class="box" style="--c:#EF9F27;left:52%;top:44%;width:17%;height:38%">'
+    f'<span class="tag">{node["behavior"]} 0.88</span></div>'
+    '<div class="box" style="--c:#85B7EB;left:78%;top:54%;width:11%;height:30%">'
+    '<span class="tag">person 0.91</span></div>'
+    '<div class="hud hud-bottom">'
+    f'<span class="chip"><span class="dot" style="background:#97C459"></span>正常</span>'
+    f'<span class="chip"><span class="dot" style="background:#EF9F27"></span>{node["behavior"]}</span>'
+    f'<span class="chip"><span class="dot" style="background:#85B7EB"></span>正常</span>'
+    f'<span>检测目标 {n_obj} · 主导行为 {node["behavior"]} · 延迟 {node["latency_ms"]} ms</span>'
+    '</div></div>'
 )
-st_html(view, height=360)
+st.iframe(view, height=360)
+st.markdown(style.footer(), unsafe_allow_html=True)
