@@ -31,7 +31,7 @@ with k3:
 with k4:
     st.markdown(style.kpi("94%", "处置及时率", "目标 ≥ 90%"), unsafe_allow_html=True)
 with k5:
-    st.markdown(style.kpi("82 / 100", "城市适老化指数", "综合评估"), unsafe_allow_html=True)
+    st.markdown(style.kpi("82 / 100", "校园适老化指数", "综合评估"), unsafe_allow_html=True)
 
 st.markdown(style.section("事件趋势", "近 30 天 · 模拟数据"), unsafe_allow_html=True)
 trend = sim_data.gen_trend()
@@ -61,7 +61,7 @@ with col_b:
 
 col_c, col_d = st.columns(2)
 with col_c:
-    st.markdown(style.section("城市适老化指数"), unsafe_allow_html=True)
+    st.markdown(style.section("校园适老化指数"), unsafe_allow_html=True)
     gauge = go.Figure(go.Indicator(
         mode="gauge+number", value=82,
         gauge={"axis": {"range": [0, 100]}, "bar": {"color": "#0F6E56"},
@@ -84,5 +84,5 @@ with col_d:
 
 st.markdown(style.note(
     '适老化指数综合设施覆盖率、事件密度、响应时长与处置及时率等维度，'
-    '用于政府端城市适老化治理评估（当前为模拟值）。'), unsafe_allow_html=True)
+    '用于高校端校园适老化治理评估（当前为模拟值）。'), unsafe_allow_html=True)
 st.markdown(style.footer(), unsafe_allow_html=True)

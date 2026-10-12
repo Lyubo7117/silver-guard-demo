@@ -17,7 +17,7 @@ ARCH_SVG = """
   <text x="20" y="18" font-size="14" font-weight="600" fill="#2C2C2A">端–边–云–端 四层协同架构</text>
   <rect x="20" y="34" width="640" height="62" rx="12" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
   <text x="36" y="52" font-size="13" font-weight="600" fill="#085041">感知层（端）</text>
-  <text x="150" y="52" font-size="12" fill="#0F6E56">公园 / 广场 / 步行街 · 多模态采集终端</text>
+  <text x="150" y="52" font-size="12" fill="#0F6E56">家属区 / 活动中心 / 校园步道 · 多模态采集终端</text>
   <rect x="32" y="62" width="196" height="26" rx="8" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
   <text x="130" y="79" font-size="12" fill="#04342C" text-anchor="middle">摄像头 / 麦克风阵列 / 环境传感器</text>
   <line x1="340" y1="96" x2="340" y2="120" stroke="#5F5E5A" stroke-width="1.5" marker-start="url(#ar)" marker-end="url(#ar)"/>
@@ -60,10 +60,10 @@ st.markdown(style.css(), unsafe_allow_html=True)
 st.markdown(
     '<div class="sg-hero">'
     '<div class="eyebrow">SMART CITY · 智慧生活与大健康赛道</div>'
-    '<div class="t">银发守护 · 城市公共空间适老化智能感知与服务系统</div>'
+    '<div class="t">银发守护 · 高校公共空间适老化智能感知与服务系统</div>'
     '<div class="s">基于多模态大模型的「感知 — 理解 — 服务」一体化解决方案：'
-    '在公园、广场、步行街等公共空间部署多模态感知终端，边缘端本地完成跌倒 / 徘徊 / 聚集等异常行为识别，'
-    '云端结合适老化知识图谱生成个性化服务建议，经「银发守护」小程序触达家属并联动社区处置。</div>'
+    '在高校家属区、老干部活动中心、校园步道等公共空间部署多模态感知终端，边缘端本地完成跌倒 / 徘徊 / 聚集等异常行为识别，'
+    '云端结合适老化知识图谱生成个性化服务建议，经「银发守护」小程序触达家属并联动离退休工作处与校医院处置。</div>'
     '<div class="tags">'
     '<span class="badge b-primary">概念演示原型</span>'
     '<span class="badge b-info">多模态大模型</span>'
@@ -89,7 +89,7 @@ with c1:
 with c2:
     st.markdown(style.kpi("≈4000 万/年", "老年人发生跌倒", "约 50% 发生在公共场所，救治不及时后果严重"), unsafe_allow_html=True)
 with c3:
-    st.markdown(style.kpi("1.2 万亿元", "2026年智慧养老市场规模", "预测值，公共空间适老化是增量蓝海"), unsafe_allow_html=True)
+    st.markdown(style.kpi("1.2 万亿元", "2026年智慧养老市场规模", "预测值，高校场景是精准切入点"), unsafe_allow_html=True)
 
 # ---------------- 系统闭环 ----------------
 st.markdown(style.section("系统闭环", "感知 → 理解 → 服务"), unsafe_allow_html=True)
@@ -100,7 +100,7 @@ st.markdown(
     '<div class="step"><div class="n">2</div><div class="t">理解</div>'
     '<div class="d">异常事件转为结构化特征，云端 LLM 结合适老化知识图谱进行语义理解与风险推理。</div></div>'
     '<div class="step"><div class="n">3</div><div class="t">服务</div>'
-    '<div class="d">生成个性化服务建议，经小程序触达家属并联动社区处置，形成主动服务闭环。</div></div>'
+    '<div class="d">生成个性化服务建议，经小程序触达家属并联动离退休工作处与校医院处置，形成主动服务闭环。</div></div>'
     '</div>',
     unsafe_allow_html=True,
 )
@@ -125,9 +125,9 @@ with m4:
 st.markdown(style.section("商业模式", "B2G2C · 收入结构预估"), unsafe_allow_html=True)
 st.markdown(
     '<div class="sg-card">'
-    '<div class="sg-p">以政府端 SaaS 订阅为基本盘，家属端增值服务提升粘性，机构端与数据增值服务拓展中长期空间。</div>'
+    '<div class="sg-p">以高校端 SaaS 订阅为基本盘（离退休工作处 / 校医院），家属端增值服务提升粘性，机构端与数据增值服务拓展中长期空间。</div>'
     '<div class="sg-barrow">'
-    '<div class="item"><div class="lab"><span>政府端 SaaS 年费（5000 元/节点）</span><b>约 60%</b></div>'
+    '<div class="item"><div class="lab"><span>高校端 SaaS 年费（5000 元/节点）</span><b>约 60%</b></div>'
     '<div class="sg-bar"><i style="width:60%"></i></div></div>'
     '<div class="item"><div class="lab"><span>家属端增值服务（99 元/年）</span><b>约 25%</b></div>'
     '<div class="sg-bar"><i style="width:25%"></i></div></div>'

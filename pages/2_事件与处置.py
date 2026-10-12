@@ -43,7 +43,7 @@ tl = [
     ("T1 本地脱敏", "人脸模糊化，仅上传行为特征向量"),
     ("T2 云端理解", "LLM 结合知识图谱进行语义理解与推理（约1.5s，模拟）"),
     ("T3 生成建议", "输出结构化个性化服务建议"),
-    ("T4 触达联动", "通知家属 / 派单社区 / 联动处置"),
+    ("T4 触达联动", "通知家属 / 派单离退休工作处 / 联动校医院"),
     ("T5 处置完结", "记录归档，纳入适老化指数统计"),
 ]
 for i, (t, d) in enumerate(tl):
@@ -80,8 +80,8 @@ with b1:
     if st.button("通知家属", width="stretch"):
         st.toast("已通知家属（模拟）")
 with b2:
-    if st.button("派单社区", width="stretch"):
-        st.toast("已派单至社区（模拟）")
+    if st.button("派单离退休处", width="stretch"):
+        st.toast("已派单至离退休工作处（模拟）")
 with b3:
     if st.button("标记已完结", width="stretch"):
         set_status("已完结")
