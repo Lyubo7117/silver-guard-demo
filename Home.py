@@ -81,14 +81,87 @@ st.markdown(style.note(
     '不代表真实运行结果；技术指标为设计目标值，预估依据见「6 指标预估依据」。'),
     unsafe_allow_html=True)
 
+# ---------------- 用户与客户 ----------------
+st.markdown(style.section("用户与客户", "三层角色 · 各取所需"), unsafe_allow_html=True)
+st.markdown(
+    '<div class="sg-roles">'
+    '<div class="role"><div class="tag">付费方 · 客户</div>'
+    '<div class="who">高校（离退休工作处 / 校医院）</div>'
+    '<div class="d">退休教职工在校园公共空间发生意外，学校承担管理责任与道义责任——安全兜底是刚性支出；'
+    '一个处室即可决策覆盖全校，决策链极短。</div>'
+    '<div class="pay">→ 高校端 SaaS 年费（5000 元/节点/年）</div></div>'
+    '<div class="role"><div class="tag">使用方 · 用户</div>'
+    '<div class="who">高校老年人（院士、退休教职工）</div>'
+    '<div class="d">全国 3000 余所高校共有退休教职工约 200 万人，日常在家属区、活动中心、步道晨练活动。'
+    '对产品的要求是“不改变生活习惯的安全感”：日常无感，出事后被服务。</div>'
+    '<div class="pay">→ 小程序语音交互 · SOS 一键求助</div></div>'
+    '<div class="role"><div class="tag">受益方 · 增值付费</div>'
+    '<div class="who">老人在外地的子女（家属）</div>'
+    '<div class="d">远程知情与异常告警是情感刚需：父母在千里之外的校园里是否安好，值得每月一杯咖啡的钱。</div>'
+    '<div class="pay">→ 家属端增值服务包（99 元/年/户）</div></div>'
+    '</div>',
+    unsafe_allow_html=True,
+)
+
+# ---------------- 为什么是高校 ----------------
+st.markdown(style.section("为什么是高校", "跌倒监测技术的价值取决于四个要素是否同时成立"), unsafe_allow_html=True)
+st.markdown(
+    '<div class="sg-cmp">'
+    '<div class="col"><div class="hd"><span>养老院</span><span class="mk">为何不首发</span></div>'
+    '<div class="row"><span class="k">跌倒风险</span><span class="v">中（活动受控）</span></div>'
+    '<div class="row"><span class="k">监护空白</span><span class="v">无空白——护工三班倒</span></div>'
+    '<div class="row"><span class="k">可部署性</span><span class="v">低：跌倒多在卫生间等私密空间，法规禁止装摄像头</span></div>'
+    '<div class="row"><span class="k">责任主体</span><span class="v">机构自有 SOP，技术边际价值有限</span></div></div>'
+    '<div class="col"><div class="hd"><span>城市社区</span><span class="mk">为何不首发</span></div>'
+    '<div class="row"><span class="k">跌倒风险</span><span class="v">高</span></div>'
+    '<div class="row"><span class="k">监护空白</span><span class="v">空白</span></div>'
+    '<div class="row"><span class="k">可部署性</span><span class="v">高：小区 / 公园公共空间</span></div>'
+    '<div class="row"><span class="k">责任主体</span><span class="v">缺失——居委会 / 物业无预算动力，决策链极长</span></div></div>'
+    '<div class="col hl"><div class="hd"><span>高校公共空间</span><span class="mk">本项目首发场景 ✓</span></div>'
+    '<div class="row"><span class="k">跌倒风险</span><span class="v">高：晨练遛弯，活动量大</span></div>'
+    '<div class="row"><span class="k">监护空白</span><span class="v">空白：公共空间无专职监护</span></div>'
+    '<div class="row"><span class="k">可部署性</span><span class="v">高：家属区 / 步道属单位资产</span></div>'
+    '<div class="row"><span class="k">责任主体</span><span class="v">明确：离退休工作处，预算稳定</span></div></div>'
+    '</div>',
+    unsafe_allow_html=True,
+)
+st.markdown(
+    '<div class="sg-p" style="margin-top:10px">四要素<strong>唯一齐备</strong>的高校公共空间，是跌倒智能感知技术最佳却空白的落地场景；'
+    '方案标准化后可向机关单位院区、干休所等同构场景复制，社区与养老机构列为第 3 年后的延展方向。</div>',
+    unsafe_allow_html=True,
+)
+
+# ---------------- 为什么学生发现不了 ----------------
+st.markdown(style.section("为什么学生发现不了", "“周围有人”不等于“被及时发现”"), unsafe_allow_html=True)
+st.markdown(
+    '<div class="sg-flow">'
+    '<div class="step"><div class="n">1</div><div class="t">时空错位</div>'
+    '<div class="d">高校校园功能区严格隔离：老人活动集中于清晨与傍晚的家属区、步道与活动中心，'
+    '与学生的教学区、实验室在时间与空间上几乎不重叠——“周围有学生”在大多数时段并不成立。</div></div>'
+    '<div class="step"><div class="n">2</div><div class="t">识别与行动断层</div>'
+    '<div class="d">老人倒地时，路过的学生分不清是跌倒还是休息锻炼、受“扶老焦虑”影响不敢贸然施助、'
+    '也不知道该向谁报告——“有人经过”≠“有人识别、报告、施救”。</div></div>'
+    '<div class="step"><div class="n">3</div><div class="t">时间断层</div>'
+    '<div class="d">约 50% 的跌倒者无法自行起身，跌倒后“长卧”超过 1 小时将显著增加压疮、低体温、'
+    '横纹肌溶解及死亡风险；清晨与夜间的跌倒可能数小时无人察觉。</div></div>'
+    '</div>',
+    unsafe_allow_html=True,
+)
+st.markdown(style.note(
+    '<b>系统的本质：把老人“被看见”从概率事件变为确定性事件。</b>'
+    '从跌倒到告警响应 <200ms，从告警到值班人员到场以分钟计——全程无需任何人“碰巧路过”。'),
+    unsafe_allow_html=True)
+
 # ---------------- 社会价值 ----------------
 st.markdown(style.section("为什么做这件事", "社会价值与市场空间"), unsafe_allow_html=True)
-c1, c2, c3 = st.columns(3)
+c1, c2, c3, c4 = st.columns(4)
 with c1:
     st.markdown(style.kpi("2.97 亿", "60岁及以上老年人口", "占总人口 21.1%，已进入中度老龄化社会"), unsafe_allow_html=True)
 with c2:
-    st.markdown(style.kpi("≈4000 万/年", "老年人发生跌倒", "约 50% 发生在公共场所，救治不及时后果严重"), unsafe_allow_html=True)
+    st.markdown(style.kpi("≈4000 万/年", "老年人发生跌倒", "65 岁以上老人因伤致死首位原因"), unsafe_allow_html=True)
 with c3:
+    st.markdown(style.kpi("≈200 万人", "全国高校退休教职工", "3000 余所高校，组织化与保障最充分的老年群体"), unsafe_allow_html=True)
+with c4:
     st.markdown(style.kpi("1.2 万亿元", "2026年智慧养老市场规模", "预测值，高校场景是精准切入点"), unsafe_allow_html=True)
 
 # ---------------- 系统闭环 ----------------
@@ -125,7 +198,8 @@ with m4:
 st.markdown(style.section("商业模式", "B2G2C · 收入结构预估"), unsafe_allow_html=True)
 st.markdown(
     '<div class="sg-card">'
-    '<div class="sg-p">以高校端 SaaS 订阅为基本盘（离退休工作处 / 校医院），家属端增值服务提升粘性，机构端与数据增值服务拓展中长期空间。</div>'
+    '<div class="sg-p">以高校端 SaaS 订阅为基本盘（离退休工作处 / 校医院），家属端增值服务提升粘性；'
+    '机构端与数据增值服务作为高校模式成熟后的延展方向（第 3 年起），不投入早期主要营销资源。</div>'
     '<div class="sg-barrow">'
     '<div class="item"><div class="lab"><span>高校端 SaaS 年费（5000 元/节点）</span><b>约 60%</b></div>'
     '<div class="sg-bar"><i style="width:60%"></i></div></div>'

@@ -127,6 +127,34 @@ BASE_CSS = """
 .sg-mon .chip{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;color:#D8D5CC;
   background:rgba(255,255,255,.09);padding:2px 8px;border-radius:999px}
 .sg-mon .chip .dot{width:7px;height:7px;border-radius:50%}
+/* ---------- 用户三层角色 ---------- */
+.sg-roles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:900px){.sg-roles{grid-template-columns:1fr}}
+.sg-roles .role{border:1px solid var(--sg-line);border-radius:12px;padding:14px 16px;background:#FFFFFF;
+  box-shadow:var(--sg-shadow);transition:transform .15s ease,box-shadow .15s ease}
+.sg-roles .role:hover{transform:translateY(-1px);box-shadow:var(--sg-shadow-lg)}
+.sg-roles .role .tag{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--sg-primary)}
+.sg-roles .role .who{font-size:14.5px;font-weight:700;color:var(--sg-ink);margin-top:5px}
+.sg-roles .role .d{font-size:12px;color:#5F5E5A;margin-top:6px;line-height:1.7}
+.sg-roles .role .pay{margin-top:9px;padding-top:8px;border-top:1px dashed #E5E2DA;
+  font-size:11.5px;color:var(--sg-primary);font-weight:600}
+/* ---------- 场景三列对比 ---------- */
+.sg-cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:900px){.sg-cmp{grid-template-columns:1fr}}
+.sg-cmp .col{border:1px solid var(--sg-line);border-radius:12px;background:#FFFFFF;
+  overflow:hidden;box-shadow:var(--sg-shadow)}
+.sg-cmp .col .hd{padding:9px 14px;font-size:13px;font-weight:700;border-bottom:1px solid var(--sg-line);
+  background:#FAF9F5;color:var(--sg-muted);display:flex;justify-content:space-between;align-items:center}
+.sg-cmp .col .hd .mk{font-size:11px;font-weight:600;color:var(--sg-faint)}
+.sg-cmp .col.hl{border-color:var(--sg-primary);box-shadow:var(--sg-shadow-lg)}
+.sg-cmp .col.hl .hd{background:var(--sg-primary-soft);color:var(--sg-primary-deep);border-bottom-color:var(--sg-primary-mid)}
+.sg-cmp .col.hl .hd .mk{color:var(--sg-primary)}
+.sg-cmp .row{display:flex;justify-content:space-between;gap:10px;padding:8px 14px;
+  font-size:12px;border-bottom:1px solid #F0EEE7;line-height:1.55}
+.sg-cmp .row:last-child{border-bottom:none}
+.sg-cmp .row .k{color:var(--sg-faint);flex:none}
+.sg-cmp .row .v{color:var(--sg-ink);text-align:right}
+.sg-cmp .col.hl .row .v{color:var(--sg-primary-deep);font-weight:600}
 /* ---------- 页脚 ---------- */
 .sg-foot{margin-top:26px;padding-top:14px;border-top:1px solid var(--sg-line);
   text-align:center;font-size:11.5px;color:var(--sg-faint);letter-spacing:.02em}
